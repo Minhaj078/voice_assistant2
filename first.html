@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        p {
+            background-color: black;
+
+        }
+    </style>
+
+    <title>Voice to Text</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="banner">
+    <!-- Rest of the code will go here -->
+    <div className="Microphone">
+        <!-- Close Microphone button -->
+        
+        <img src="https://cdn.jsdelivr.net/gh/corover/assets@latest/askdisha-bucket/close.png" alt="Close Microphone" tabIndex="1" style="width: 15px; position: absolute; right: 15px; top: 15px; cursor: pointer; z-index: 999;"></img>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+          <!-- Placeholder for "Listening..." text -->
+          <div style="padding: 20px 22px; height: 50%; width: 100%; position: relative;">
+            <p style="width: 100%; font-size: 20px; text-align: center; color: rgb(225, 15, 15); margin: 25px 0px 0px;">Listening...</p>
+          </div>
+          <!-- Instruction to user and microphone icon -->
+          <div style="height: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; width: 100%;">
+            <div style="position: absolute; width: 100%; left: 50%; top: -25px; transform: translateX(-50%);">
+              <p style="margin: 0px 0px 2px; color: rgb(96, 96, 96); font-style: italic; text-align: center;">Try Saying</p>
+              <p style="margin: 0px; color: rgb(96, 96, 96); text-align: center; font-size: 16px;">LPU's Hackathon </p>
+            </div>
+            <!-- Microphone button -->
+            <div className="outer-pulse">
+              <div class="microphone-new-active" id="startButton" style="padding: 20px;">
+                <img src="https://cdn.jsdelivr.net/gh/corover/assets@latest/askdisha-bucket/speech-refactored.png" alt="" style="height: 50px; width: 50px;"></img>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    
+    <!-- Placeholder for the output of voice recognition -->
+    <div id="output"></div>
+    <script>
+        // Retrieving necessary elements from the DOM
+        const startButton = document.getElementById('startButton');
+        const outputDiv = document.getElementById('output');
+    
+        // Creating a new SpeechRecognition object
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        // Setting the language for speech recognition
+        recognition.lang = 'en-US';
+    
+        // Event listener for when speech recognition starts
+        recognition.onstart = () => {
+            startButton.textContent = 'Listening...';
+            outputDiv.textContent = '';
+        };
+    
+        // Event listener for when speech recognition produces a result
+        recognition.onresult = (event) => {
+            // Extracting the transcript from the event results
+            const transcript = event.results[0][0].transcript;
+            // Displaying the transcript in the output div
+            outputDiv.textContent = transcript;
+        };
+    
+        // Event listener for when speech recognition ends
+        recognition.onend = () => {
+            startButton.textContent = 'Start Voice Input';
+        };
+    
+        // Event listener for when the start button is clicked
+        startButton.addEventListener('click', () => {
+            // Starting the speech recognition
+            recognition.start();
+        });
+    </script>
+</body>
